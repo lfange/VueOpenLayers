@@ -13,6 +13,7 @@ const initMap = {
       // url: 'http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer/tile/{z}/{y}/{x}',
       // url: 'http://webrd01.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scale=1&style=8',
       // url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      // url: '/static/openStreetMapsichuan/{z}/{x}/{y}.png', // 加载离线瓦片地图
       url: 'https://webrd01.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',
       // url: 'https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v11/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoia2Vya2VyIiwiYSI6ImNrM3U2dDN4dDBhankzaXFtYmNtNnBpMWIifQ.Tkd_IOzl1ZPaD3jTn68B3A',
       // url: 'http://map.geoq.cn/ArcGIS/rest/services/ChinaOnlineStreetPurplishBlue/MapServer/tile/{z}/{y}/{x}',
