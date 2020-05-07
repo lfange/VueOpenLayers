@@ -1,0 +1,198 @@
+body {
+  height: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: Microsoft YaHei, Arial, sans-serif;
+  font-size: 16px;
+}
+
+label {
+  font-weight: 700;
+}
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+#app {
+  height: 100%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+.no-padding {
+  padding: 0px !important;
+}
+
+.padding-content {
+  padding: 4px 0;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+div:focus {
+  outline: none;
+}
+
+.fr {
+  float: right;
+}
+
+.fl {
+  float: left;
+}
+
+.pr-5 {
+  padding-right: 5px;
+}
+
+.pl-5 {
+  padding-left: 5px;
+}
+
+.block {
+  display: block;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.inlineBlock {
+  display: block;
+}
+
+aside {
+  background: #eef1f6;
+  padding: 8px 24px;
+  margin-bottom: 20px;
+  border-radius: 2px;
+  display: block;
+  line-height: 32px;
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  color: #2c3e50;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* // main-container全局样式 */
+.app-container {
+  background: #fff;
+  padding-top: 140px;
+}
+.app-container .table-container, .app-container .tableBox{
+  min-height: 200px;
+  position: relative;
+}
+.components-container {
+  margin: 30px 50px;
+  position: relative;
+}
+
+.pagination-container {
+  margin-top: 30px;
+}
+
+.text-center {
+  text-align: center
+}
+
+/******************************************************************************/
+/************************自定义全局样式*********************/
+/************************@Author:fxh*********************/
+/******************************************************************************/
+
+/* 自定义滚动条 */
+.scrollbar {
+  height: 100%;
+  /* 组件中根据需求开启X,Y轴 */
+  overflow: auto;
+  cursor: pointer;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  background-color: #ccd0d9;
+}
+
+html,
+body,
+section,
+p,
+h1,
+h2,
+h3,
+h4 {
+  padding: 0;
+  margin: 0;
+}
+
+ul,
+li {
+  list-style: none;
+  padding: 0;
+}
+
+/****查询列表没有结果提示*****/
+
+.container,
+.create-container {
+  min-height: calc(80vh - 100px) !important;
+  position: relative;
+  background-color: #fff;
+  width: 95% !important;
+  padding-top: 104px;
+}
+
+.containerBox {
+  position: relative;
+}
+
+.grid_no_yujian {
+  text-align: center;
+  position: absolute;
+  width: 110px;
+  line-height: 30px;
+  top: 50%;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+}
+
+.grid_no_yujian p {
+  width: 90%;
+  margin: 0 auto;
+  color: #bab8b8;
+}
+
+.grid_no_yujian svg {
+  margin: 0 5px;
+  position: relative;
+  font-size: 36px;
+  top: 5px;
+}
