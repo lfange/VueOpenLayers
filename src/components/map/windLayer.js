@@ -22,7 +22,7 @@ const windLayer = {
         forceRender: false,
         windOptions: {
           // colorScale: scale,
-          velocityScale: 1 / 30,
+          velocityScale: 1 / 20,
           paths: 1000,
           // eslint-disable-next-line no-unused-vars
           colorScale: () => {
@@ -54,7 +54,7 @@ const windLayer = {
       })
       //  获取这个图层上面加的点线信息 this.pielayer.getSource().getFeatures()
       _this.pielayer = vector
-      this.map.addLayer(vector)
+      this.map.addLayer(_this.pielayer)
     }
   }
 }

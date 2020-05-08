@@ -177,7 +177,7 @@ const rendIcon = {
           scale: 0.4,
           anchorXUnits: 'fraction',
           anchorYUnits: 'pixels',
-          src: '../../../static/images/dingwei.png'
+          src: '/static/images/dingwei.png'
         })
       })
       iconFeature.setStyle(iconStyle)

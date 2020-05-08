@@ -3,6 +3,7 @@
 OpenLayers ^6.3.1
 
 > VueOpenLayers
+本项目使用在线瓦片地图，仅供学习使用，不能商用！！！
 
 ## Build Setup
 
