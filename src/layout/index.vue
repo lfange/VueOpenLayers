@@ -6,6 +6,7 @@
       <div id="popup-content"></div>
     </div>
     <el-button type="primary" @click="positionIcon([104.089175, 30.650451])">定位</el-button>
+    <el-button type="primary" @click="addLayer">加载风场</el-button>
   </div>
 </template>
 <script>
@@ -29,13 +30,19 @@ export default {
   mounted () {
   },
   methods: {
+    addLayer () {
+      if (this.windLay) {
+        this.map.removeLayer(this.windLay)
+        this.windLay = null
+      } else this.initWind()
+    }
   }
 }
 </script>
 <style>
   .map {
     width: 100%;
-    height: 60vh;
+    height: 80vh;
   }
   /* img {
     filter: grayscale(100%)!important;

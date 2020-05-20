@@ -1,7 +1,8 @@
 import {createEmpty, getWidth, getHeight, extend} from 'ol/extent'
 import {Vector as VectorLayer} from 'ol/layer'
 import {Cluster} from 'ol/source'
-import {Circle as CircleStyle, Fill, Stroke, Style, Text, RegularShape, Icon} from 'ol/style'
+import {Circle as CircleStyle, Fill, Stroke, Style, Icon, Text} from 'ol/style'
+import { TempeStyle, rainStyle, areaStyle } from '@/utils/Linestyle.js'
 
 const cluster = {
   data () {
@@ -14,7 +15,7 @@ const cluster = {
         width: 1
       }),
       textFill: new Fill({
-        color: '#fff'
+        color: '#409EFF'
       }),
       textStroke: new Stroke({
         color: 'rgba(0, 0, 0, 0.6)',
@@ -37,12 +38,23 @@ const cluster = {
       this.clustLayer = new VectorLayer({
         source: new Cluster({
           distance: 40,
-          source: _this.VectorSource
+          source: _this.clusterVetSource,
+          geometryFunction: _this.geometryFunction
         }),
         style: _this.clusStyleFunction
       })
-      console.log('this.clustLayer', _this.VectorSource)
       this.map.addLayer(this.clustLayer)
+    },
+    romoveCulstLayer () {
+      if (this.clustLayer) this.map.removeLayer(this.clustLayer)
+      if (this.IconLayer) this.map.removeLayer(this.IconLayer)
+      if (this.pielayer) this.map.removeLayer(this.pielayer)
+    },
+    geometryFunction (feature) {
+      if (feature.getGeometry().getType() === 'LineString') {
+        return null
+      }
+      return feature.getGeometry()
     },
     calculateClusterInfo (resolution) {
       let _this = this
@@ -64,6 +76,7 @@ const cluster = {
         feature.set('radius', radius)
       }
     },
+    // 聚合样式
     clusStyleFunction (feature, resolution) {
       let _this = this
       if (resolution !== _this.currentResolution) {
@@ -78,45 +91,76 @@ const cluster = {
           image: new CircleStyle({
             radius: feature.get('radius'),
             fill: new Fill({
-              color: [255, 153, 0, Math.min(0.8, 0.4 + (size / _this.maxFeatureCount))]
+              color: [209, 231, 254, Math.min(0.8, 0.4 + (size / _this.maxFeatureCount))]
             })
           }),
           text: new Text({
+            font: '14px sans-serif',
             text: size.toString(),
-            fill: _this.textFill,
-            stroke: _this.textStroke
+            fill: _this.textFill
+            // stroke: _this.textStroke
           })
         })
       } else {
-        console.log('feature', feature)
         var originalFeature = feature.get('features')[0]
-        console.log('originalFeature', originalFeature)
-        style = new Style({
-          image: new Icon({
-            src: originalFeature.values_.src
-          })
-        })
+        style = this.styleFunction(originalFeature)
       }
       return style
     },
-    createEarthquakeStyle (feature) {
+    // 聚合状态选中样式设置
+    selectStyleFunction (feature) {
+      // if (feature.getGeometry().getType() !== 'Point') return feature
       let _this = this
-      // 2012_Earthquakes_Mag5.kml stores the magnitude of each earthquake in a
-      // standards-violating <magnitude> tag in each Placemark.  We extract it
-      // from the Placemark's name instead.
-      var name = feature.get('name')
-      var magnitude = parseFloat(name.substr(2))
-      var radius = 5 + 20 * (magnitude - 5)
+      var styles = [new Style({
+        image: new CircleStyle({
+          radius: feature.get('radius'),
+          fill: _this.invisibleFill
+        })
+      })]
+      var originalFeatures = feature.get('features')
+      if (originalFeatures) {
+        var originalFeature
+        for (var i = originalFeatures.length - 1; i >= 0; --i) {
+          originalFeature = originalFeatures[i]
+          styles.push(_this.styleFunction(originalFeature))
+          // styles.push(_this.createEarthquakeStyle(originalFeature))
+        }
+      } else {
+        // 聚合状态，不是聚合图层的线做处理
+        if (feature.values_.name === 'warning') {
+          styles.push(new Style({
+            image: new Icon({
+              scale: 1.5,
+              src: '/static/images/mipmap-xhdpi/xianqing.png'
+            })
+          }))
+        } else if (feature.values_.name === '点击位置') {
+          styles.push(new Style({
+            image: new Icon({
+              scale: 0.8,
+              src: '/static/images/setIcon.png'
+            })
+          }))
+        } else if (feature.values_.name === '模式预报') {
+          styles.push(_this.modelStyle(feature))
+        } else if (feature.values_.hvalue || feature.values_.hvalue === 0) {
+          const styleFuntion = this.factorType === 1 ? TempeStyle : rainStyle
+          // 等值线温度选择样式
+          styles.push(styleFuntion(feature))
+        } else if (feature.getGeometry().getType() === 'MultiPolygon') { // 行政区域
+          styles.push(areaStyle(feature))
+        } else {
+          styles.push(_this.styleFunction(feature))
+        }
+      }
 
+      return styles
+    },
+    createEarthquakeStyle (feature) {
       return new Style({
         geometry: feature.getGeometry(),
-        image: new RegularShape({
-          radius1: radius,
-          radius2: 3,
-          points: 5,
-          angle: Math.PI,
-          fill: _this.earthquakeFill,
-          stroke: _this.earthquakeStroke
+        image: new Icon({
+          src: feature.values_.src
         })
       })
     }
