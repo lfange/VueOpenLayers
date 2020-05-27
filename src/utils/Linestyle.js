@@ -42,39 +42,12 @@ const getTempeColor = function (size) {
   }
   return color
 }
-
-// 降水颜色
-const raniColor = function (size) {
-  let color = ''
-  if (size > 0 && size <= 1) {
-    color = 'rgb(206,255,255)'
-  } else if (size > 1 && size <= 2) {
-    color = 'rgb(36,255,252)'
-  } else if (size > 2 && size <= 4) {
-    color = 'rgb(34,183,255)'
-  } else if (size > 4 && size <= 6) {
-    color = 'rgb(1,120,180)'
-  } else if (size > 6 && size <= 8) {
-    color = 'rgb(1,81,202)'
-  } else if (size > 8 && size <= 10) {
-    color = 'rgb(9,47,209)'
-  } else if (size > 10 && size <= 20) {
-    color = 'rgb(135,23,239)'
-  } else if (size > 20 && size <= 50) {
-    color = 'rgb(106,6,159)'
-  } else if (size > 50) {
-    color = 'red'
-  } else if (size < 0) {
-    color = 'white'
-  }
-  return color
-}
-
 // 温度颜色绘制
 export function TempeStyle (feature) {
   const tempeVetor = new Style({
     stroke: new Stroke({
       color: getTempeColor(feature.getProperties().lvalue),
+      lineDash: [4],
       width: 2,
       opacity: 0.3
     }),
@@ -82,40 +55,7 @@ export function TempeStyle (feature) {
       color: getTempeColor(feature.getProperties().lvalue)
     })
   })
-  return tempeVetor
-}
 
-export function rainStyle (feature) {
-  const tempeVetor = new Style({
-    stroke: new Stroke({
-      color: raniColor(feature.getProperties().lvalue),
-      width: 2,
-      opacity: 0.3
-    }),
-    fill: new Fill({
-      color: raniColor(feature.getProperties().lvalue)
-    })
-  })
-  return tempeVetor
-}
-
-// 行政区域
-export function areaStyle (feature) {
-  const tempeVetor = new Style({
-    stroke: new Stroke({
-      color: 'rgb(25,137,250)',
-      lineCap: 'square',
-      width: 1
-    }),
-    text: new Text({
-      text: feature.values_.name,
-      offsetX: 6,
-      scale: 1.2,
-      fill: new Fill({
-        color: 'rgb(25,137,250)'
-      })
-    })
-  })
   return tempeVetor
 }
 

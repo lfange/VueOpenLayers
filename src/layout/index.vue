@@ -5,8 +5,9 @@
       <a href="#" id="popup-closer" class="ol-popup-closer"></a>
       <div id="popup-content"></div>
     </div>
+    <blockMenu :menuArr="menuArr" @itemClick="itemClick" @menuClick="menuClick" class="blockScss"/>
     <el-button type="primary" @click="positionIcon([104.089175, 30.650451])">定位</el-button>
-    <el-button type="primary" @click="addLayer">加载风场</el-button>
+    <el-button type="primary" @click="reomovelayer([104.089175, 30.650451])">定位</el-button>
   </div>
 </template>
 <script>
@@ -17,11 +18,86 @@ import rendIcon from '@/components/map/icon'
 import getData from '@/components/map/getData'
 import cluster from '@/components/map/cluster'
 import windLayer from '@/components/map/windLayer'
+import blockMenu from '@/components/block-menu'
 export default {
+  components: {
+    blockMenu
+  },
   mixins: [ initMap, popup, rendIcon, getData, cluster, windLayer ],
   data () {
     return {
       loading: false,
+      menuArr: [
+        {
+          title: '监测站',
+          icon: require('../../static/images/mipmap-mdpi/dingwei.png'),
+          menuId: 1,
+          children: [
+            {
+              name: '气象监测站',
+              icon: require('../../static/images/mipmap-mdpi/dingwei.png'),
+              itemId: 1
+            },
+            {
+              name: '水文监测站',
+              icon: require('../../static/images/mipmap-mdpi/dingwei.png'),
+              itemId: 2
+            },
+            {
+              name: '地质监测站',
+              icon: require('../../static/images/mipmap-mdpi/dingwei.png'),
+              itemId: 3
+            },
+            {
+              name: '视频监测站',
+              icon: require('../../static/images/mipmap-mdpi/dingwei.png'),
+              itemId: 4
+            }
+          ]
+        },
+        {
+          title: '项目',
+          icon: require('../../static/images/mipmap-mdpi/dingwei.png'),
+          menuId: 2,
+          children: [
+            {
+              name: '道路',
+              icon: require('../../static/images/mipmap-mdpi/dingwei.png'),
+              itemId: 1
+            },
+            {
+              name: '水库',
+              icon: require('../../static/images/mipmap-mdpi/dingwei.png'),
+              itemId: 2
+            },
+            {
+              name: '山坡',
+              icon: require('../../static/images/mipmap-mdpi/dingwei.png'),
+              itemId: 3
+            },
+            {
+              name: '景点',
+              icon: require('../../static/images/mipmap-mdpi/dingwei.png'),
+              itemId: 4
+            }
+          ]
+        },
+        {
+          title: '行政区域',
+          icon: require('../../static/images/mipmap-mdpi/dingwei.png'),
+          menuId: 3
+        },
+        {
+          title: '基础信息',
+          icon: require('../../static/images/mipmap-mdpi/dingwei.png'),
+          menuId: 4
+        },
+        {
+          title: '地图信息',
+          icon: require('../../static/images/mipmap-mdpi/dingwei.png'),
+          menuId: 5
+        }
+      ],
       popupLayer: null // 弹出框图层
     }
   },
@@ -30,11 +106,11 @@ export default {
   mounted () {
   },
   methods: {
-    addLayer () {
-      if (this.windLay) {
-        this.map.removeLayer(this.windLay)
-        this.windLay = null
-      } else this.initWind()
+    itemClick (i) {
+      console.log('i', i)
+    },
+    menuClick (i) {
+      console.log('menuClick', i)
     }
   }
 }
@@ -42,7 +118,7 @@ export default {
 <style>
   .map {
     width: 100%;
-    height: 80vh;
+    height: 60vh;
   }
   /* img {
     filter: grayscale(100%)!important;
@@ -91,5 +167,11 @@ export default {
   }
   .ol-popup-closer:after {
     content: "✖";
+  }
+  .blockScss {
+    width: 80px;
+    position: fixed;
+    top: 20%;
+    left: 5%;
   }
 </style>

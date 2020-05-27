@@ -11,8 +11,30 @@ const windLayer = {
     }
   },
   mounted () {
+    const people = [
+      { name: 'Tom', age: 25, city: 'Chengdu' },
+      { name: 'Tom', age: 37, city: 'Chengdu' },
+      { name: 'Jerry', age: 35, city: 'Beijing' },
+      { name: 'Frank', age: 45, city: 'Shanghai' },
+      { name: 'Frank', age: 32, city: 'Shanghai' }
+    ]
+    console.log(this.getAge(people))
   },
   methods: {
+    getAge (people) {
+      const counyAge = {}
+      const average = []
+      people.map(man => {
+        counyAge[man.city] ? counyAge[man.city].push(man.age) : counyAge[man.city] = [man.age]
+      })
+      for (let man in counyAge) {
+        let totolAge = counyAge[man].reduce(function (prev, cur) {
+          return prev + cur
+        })
+        average.push({'city': man, average: totolAge / counyAge[man].length})
+      }
+      return average
+    },
     // 风场加载
     initWind () {
       let _this = this
@@ -22,28 +44,14 @@ const windLayer = {
         forceRender: false,
         windOptions: {
           // colorScale: scale,
-          globalAlpha: 0.8,
-          velocityScale: 1 / 80,
+          velocityScale: 1 / 200,
           paths: 5000,
-          width: 3, // 线的宽度
           // eslint-disable-next-line no-unused-vars
-          colorScale: [
-            'rgb(36,104, 180)',
-            'rgb(60,157, 194)',
-            'rgb(128,205,193 )',
-            'rgb(151,218,168 )',
-            'rgb(198,231,181)',
-            'rgb(238,247,217)',
-            'rgb(255,238,159)',
-            'rgb(252,217,125)',
-            'rgb(255,182,100)',
-            'rgb(252,150,75)',
-            'rgb(250,112,52)',
-            'rgb(245,64,32)',
-            'rgb(237,45,28)',
-            'rgb(220,24,32)',
-            'rgb(180,0,35)'
-          ],
+          colorScale: () => {
+            // console.log(m);
+            return '#ff473c'
+          },
+          width: 30,
           // colorScale: scale,
           generateParticleOption: false
         }
@@ -69,6 +77,10 @@ const windLayer = {
       //  获取这个图层上面加的点线信息 this.pielayer.getSource().getFeatures()
       _this.pielayer = vector
       this.map.addLayer(_this.pielayer)
+    },
+    reomovelayer () {
+      console.log(this.map)
+      this.map.removeLayer(this.windLay)
     }
   }
 }

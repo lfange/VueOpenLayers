@@ -17,10 +17,10 @@
     "less": "^3.11.1",
     "less-loader": "^6.0.0",
     "maptalks": "^0.47.0",
-    "node-sass": "^4.14.0",
+    "node-sass": "^4.14.1",
     "ol": "^6.3.1",
-    "ol-wind": "^1.0.0-alpha.6",
-    "sass-loader": "^8.0.2",
+    "ol-wind": "^1.0.0-alpha.5",
+    "sass-loader": "^6.0.6",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "wind-layer": "^0.1.2"
